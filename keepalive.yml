@@ -1,0 +1,18 @@
+name: Keep Django Server Awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send request to Django server
+        run: |
+          curl --fail --silent --show-error \
+            --max-time 30 \
+            "https://baby-movement-counter.onrender.com/" \
+            || echo "Request failed"
